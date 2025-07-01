@@ -43,7 +43,8 @@ UR_Preview_3/
 ├── Results/                     # Output results (ignored by Git, created by Scripts if not exist)
 ├── Image/                       # Images folder
 ├── .gitignore                   # Git ignore rules
-└── README.md                    # Project overview and instructions
+├── README.md                    # Project overview and instructions
+└── CHANGELOG.md                 # Project version history
 ```
 
 
