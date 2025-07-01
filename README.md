@@ -46,12 +46,13 @@ UR_Preview_3/
 
 Initial Setup - Script
 
-1. Run setup_env.bat (UR_Preview_3\github_code\code\setup\setup_env.bat), this will set up the venv for the script
-2. Create a shortcut (.lnk) for run_missdig.bat (in the same folder as step 1)
+1. Open the Downloaded Folder (UR_Review_3) in File Explorer
+2. Run setup_env.bat (located in UR_Preview_3\github_code\code\setup\setup_env.bat), this will set up the venv for the script
+3. Create a shortcut (.lnk) for run_missdig.bat (in the same folder as step 1)
 
     a. Right click on the blank space inside the folder  
     b. New --> Shortcut  
-    c. Enter: cmd /c 
+    c. Enter: cmd /c  
     d. Right Click on run_missdig.bat  
     e. Copy as Path, and paste it after cmd /c  
     d. Give it a name  
