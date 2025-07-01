@@ -1,6 +1,6 @@
 # ur_preview package initialization
 
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 from .utils.config import load_config, load_default_config, ConfigError
 from .utils.paths import init_paths, get_base_dir, get_run_dir, get_results_dir, get_download_folder

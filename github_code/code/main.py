@@ -82,7 +82,16 @@ def main():
     # 6) Clip all shapefiles
     clipped = clip_all_shapefiles(shapefiles, buf_gdf)
 
-    # 7) Write summary report
+    # 7) Determine if any features were found
+    any_feats = any(len(df) > 0 for df in clipped.values())
+
+    # 8) If no features, force the buffer outline to be visible
+    if not any_feats:
+        if not cfg.has_section("VISIBILITY"):
+            cfg.add_section("VISIBILITY")
+        cfg.set("VISIBILITY", "BUFFER_AREA", "True")
+
+    # 9) Write summary report
     summary_path = ticket_dir / f"{ticket_file.stem}.txt"
     with summary_path.open("w") as f:
         f.write(f"Timestamp: {datetime.now()}\n")
@@ -90,19 +99,19 @@ def main():
         for layer, df in clipped.items():
             f.write(f"{layer}: {len(df)} feature(s)\n")
 
-    # 8) Build & save Folium map
+    # 10) Build & save Folium map
     map_obj   = build_map(cfg, work_gdf, buf_gdf, clipped)
     html_path = ticket_dir / f"{ticket_file.stem}.html"
     save_map(map_obj, html_path)
 
-    # 9) Screenshot to PNG
+    # 11) Screenshot to PNG
     png_path = ticket_dir / f"{ticket_file.stem}.png"
     screenshot_map(html_path, png_path)
 
-    # 10) Check for any features found
+    # 12) Check for any features found
     any_feats = any(len(df) > 0 for df in clipped.values())
 
-    # 11) Compose and open Outlook draft
+    # 13) Compose and open Outlook draft
     if ticket_file.suffix.lower() == ".gml":
         mail = compose_draft_gml(cfg, ticket_file, xml_file, png_path, any_feats)
     else:
@@ -111,7 +120,7 @@ def main():
     msg_path = save_and_open_draft(mail, ticket_dir)
     print(f"Draft saved to: {msg_path}")
 
-    # 12) Toast completion
+    # 14) Toast completion
     safe_toast("UR Preview", "Processing complete!", duration=5)
 
 
