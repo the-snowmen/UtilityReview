@@ -62,10 +62,11 @@ Initial Setup - Script
     i. (optionally) Change the icon in Change Icon, remove the address, hit Enter, select an icon you like   
     j. Click "Apply"  
     k. Drag the shortcut into the task bar  
-3. Open changeme_template.txt, and update the contact section of the file  
-4. Save it (rename) as changeme.txt  
-5. Go to Teams OneDrive --> GIS Specialist --> Document --> General --> Mike Stuff
-6. Download UR_data folder, and drag it into UR_preview_3 folder
+4. Open changeme_template.txt in UR_Preview_3\github_code\code\setup
+    a. update the Contact Information section of the file  
+5. Save it (rename) as changeme.txt  
+6. Go to Teams OneDrive --> GIS Specialist --> Document --> General --> Mike Stuff
+7. Download UR_data folder, and drag it into UR_preview_3 folder
 
 Initial Setup - Salesforce Scraping
 
