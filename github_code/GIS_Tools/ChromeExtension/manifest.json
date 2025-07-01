@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Utility Review Salesforce Ticket Extractor",
+  "icons":
+  {
+    "16" : "Icon/UR_icon16.PNG",
+    "32" : "Icon/UR_icon32.PNG",
+    "48" : "Icon/UR_icon48.PNG",
+    "128" : "Icon/UR_icon128.PNG"
+  },
+  "version": "1.2",
+  "description": "Extracts key info from a Salesforce ticket and lets you download it.",
+  "permissions": ["scripting", "activeTab", "clipboardWrite"],
+  "action": {
+    "default_popup": "popup_UR.html"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}
+

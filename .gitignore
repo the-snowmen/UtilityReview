@@ -1,0 +1,29 @@
+# Sensitive config
+changeme.txt
+
+# Ignore all data
+UR_data/
+
+# Ignore Results
+Results
+
+# Ignore virtual environments
+.venv/
+
+# Ignore Python cache/compiled files
+__pycache__/
+*.py[cod]
+
+# Logs and env files
+*.log
+.env*
+
+# System files
+.DS_Store
+Thumbs.db
+
+# VS Code settings
+.vscode/
+
+#Ignore shortcut link
+*.lnk

@@ -1,0 +1,9 @@
+geopandas
+pandas
+shapely
+folium
+selenium
+webdriver-manager
+win10toast
+pywin32
+fiona
