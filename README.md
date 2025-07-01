@@ -62,7 +62,7 @@ Initial Setup - Script
     i. (optionally) Change the icon in Change Icon, remove the address, hit Enter, select an icon you like   
     j. Click "Apply"  
     k. Drag the shortcut into the task bar  
-4. Open changeme_template.txt in UR_Preview_3\github_code\code\setup
+4. Open changeme_template.txt in UR_Preview_3\github_code\code\setup  
     a. update the Contact Information section of the file  
 5. Save it (rename) as changeme.txt  
 6. Go to Teams OneDrive --> GIS Specialist --> Document --> General --> Mike Stuff
