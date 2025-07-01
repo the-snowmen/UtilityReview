@@ -74,7 +74,7 @@ Initial Setup - Salesforce Scraping
 2. Open Setting
 3. Open Extension from the left side bar
 4. Toggle on Developer mode
-5. Click Load Unpacked, find this folder github_code\GIS_Tools
+5. Click Load Unpacked, find this folder github_code\GIS_Tools\ChronmeExtension
 6. Click Select Folder, and the UR Extractor is loaded now
 7. Click Details
 8. Toggle on Pin to toolbar

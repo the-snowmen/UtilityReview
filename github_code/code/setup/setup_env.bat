@@ -1,18 +1,25 @@
 @echo off
 cd /d "%~dp0\.."
 
-REM 1) Create venv at project root
-python -m venv .venv
+REM ── Detect Python Executable ────────────────────────────────
+set "PY_CMD=python"
+where python >nul 2>&1 || (
+    echo python.exe not found, trying py.exe...
+    set "PY_CMD=py"
+)
 
-REM 2) Activate
+REM ── Create venv at project root ─────────────────────────────
+%PY_CMD% -m venv .venv
+
+REM ── Activate venv ───────────────────────────────────────────
 call .venv\Scripts\activate.bat
 
-REM 3) Upgrade pip
-python -m pip install --upgrade pip
+REM ── Upgrade pip ─────────────────────────────────────────────
+%PY_CMD% -m pip install --upgrade pip
 
-REM 4) Install dependencies
+REM ── Install dependencies ────────────────────────────────────
 if exist "Setup\requirements.txt" (
-    pip install -r "Setup\requirements.txt"
+    %PY_CMD% -m pip install -r "Setup\requirements.txt"
 ) else (
     echo Setup\requirements.txt not found – skipping
 )
