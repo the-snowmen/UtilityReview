@@ -63,7 +63,8 @@ Initial Setup - Script
     k. Drag the shortcut into the task bar  
 3. Open changeme_template.txt, and update the contact section of the file  
 4. Save it (rename) as changeme.txt  
-
+5. Go to Teams OneDrive --> GIS Specialist --> Document --> General --> Mike Stuff
+6. Download UR_data folder, and drag it into UR_preview_3 folder
 
 Initial Setup - Salesforce Scraping
 
