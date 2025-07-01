@@ -8,27 +8,6 @@ Email = jcena@wwe.com
 Cell  = 969-696-1111
 Title = The John Cena
 
-# ------------------------------File Paths------------------------------
-
-[PATHS]
-# Downloads still in your home folder
-DownloadFolder = ~/Downloads
-
-# These are now relative to repo root, which is one level above "code"
-ResultsDir     = ..\..\Results
-
-# Correct path to virtual environment Python
-PythonExe      = .venv\Scripts\python.exe
-
-# Correct relative path to main.py (inside "code")
-ScriptPath     = main.py
-
-[SHAPEFILES]
-# Now relative to repo root
-CONDUIT    = ..\..\UR_data\ShapeFiles\CONDUIT\CONDUIT.shp
-FIBERCABLE = ..\..\UR_data\ShapeFiles\FIBERCABLE\FIBERCABLE.shp
-STRUCTURE  = ..\..\UR_data\ShapeFiles\STRUCTURE\STRUCTURE.shp
-
 # ------------------------------Styles------------------------------
 
 [COLORS]
@@ -72,6 +51,28 @@ SYMBOL_?         = Unknown/No Info
 SYMBOL_M         = Manhole
 SYMBOL_H         = Handhole
 SYMBOL_V         = Vault
+
+# ------------------------------File Paths------------------------------
+
+[PATHS]
+# Downloads still in your home folder
+DownloadFolder = ~/Downloads
+
+# These are now relative to repo root, which is one level above "code"
+ResultsDir     = ..\..\Results
+
+# Correct path to virtual environment Python
+PythonExe      = .venv\Scripts\python.exe
+
+# Correct relative path to main.py (inside "code")
+ScriptPath     = main.py
+
+[SHAPEFILES]
+# Now relative to repo root
+CONDUIT    = ..\..\UR_data\ShapeFiles\CONDUIT\CONDUIT.shp
+FIBERCABLE = ..\..\UR_data\ShapeFiles\FIBERCABLE\FIBERCABLE.shp
+STRUCTURE  = ..\..\UR_data\ShapeFiles\STRUCTURE\STRUCTURE.shp
+
 
 # ------------------------------Quality of Life------------------------------
 

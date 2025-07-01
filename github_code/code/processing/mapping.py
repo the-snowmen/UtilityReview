@@ -32,7 +32,7 @@ def build_map(
         "aerial":      color_cfg.get("AERIAL"),
         "underground": color_cfg.get("UNDERGROUND"),
         "bridge":      color_cfg.get("BRIDGE"),
-        "default":     color_cfg.get("WORK_AREA"),
+        "default":     color_cfg.get("UNKNOWN"),
     }
     work_area_color = color_cfg.get("WORK_AREA")
 

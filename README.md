@@ -1,9 +1,12 @@
 <p align="center">
   <img src="Image/UR_icon16.PNG" alt="Logo" width="200" />
-  <h2>Utility Review <span style="font-size: 0.75em; font-weight: normal;">(preview 3)</span></h2>
+  <h1>Utility Review <span style="font-size: 0.75em; font-weight: normal;">(preview 3)</span></h1>
 </p>
 
 <header>edited on July 1, 2025</header>
+
+# 🔁 Workflow
+![Workflow Chart](<Image/MissDig Workflow.png>)
 
 
 ```plaintext
@@ -44,40 +47,102 @@ UR_Preview_3/
 ```
 
 
-Initial Setup - Script
+# 🔧 Initial Setup Guide – Utility Review
 
-1. Open the Downloaded Folder (UR_Review_3) in File Explorer
-2. Run setup_env.bat (located in UR_Preview_3\github_code\code\setup\setup_env.bat), this will set up the venv for the script
-3. Create a shortcut (.lnk) for run_missdig.bat (in the same folder as step 1)
+## 📁 1. Prepare the Project Folder
+1. Download and extract the `UR_Preview` folder to your **Desktop**.
+2. Open the folder in **File Explorer**.
 
-    a. Right click on the blank space inside the folder  
-    b. New --> Shortcut  
-    c. Enter: cmd /c  
-    d. Right Click on run_missdig.bat  
-    e. Copy as Path, and paste it after cmd /c  
-    d. Give it a name  
-    f. Open the properties of the new shortcut  
-    g. Copy the address from the folder address bar  
-    h. Paste it into Start in  
-    i. (optionally) Change the icon in Change Icon, remove the address, hit Enter, select an icon you like   
-    j. Click "Apply"  
-    k. Drag the shortcut into the task bar  
-4. Open changeme_template.txt in UR_Preview_3\github_code\code\setup  
-    a. update the Contact Information section of the file  
-5. Save it (rename) as changeme.txt  
-6. Go to Teams OneDrive --> GIS Specialist --> Document --> General --> Mike Stuff
-7. Download UR_data folder, and drag it into UR_preview_3 folder
+---
 
-Initial Setup - Salesforce Scraping
+## ⚙️ 2. Set Up the Python Environment
+1. Navigate to:  
+   `UR_Preview_3/github_code/code/setup`
+2. Double-click `setup_env.bat`  
+   This will:
+   - Create and activate a Python virtual environment
+   - Upgrade `pip`
+   - Install required dependencies from `requirements.txt`  
+   
+📷 _Example:_  
+![setup_env](Image/setup_env.png)
 
-1. Open Google Chrome
-2. Open Setting
-3. Open Extension from the left side bar
-4. Toggle on Developer mode
-5. Click Load Unpacked, find this folder github_code\GIS_Tools\ChronmeExtension
-6. Click Select Folder, and the UR Extractor is loaded now
-7. Click Details
-8. Toggle on Pin to toolbar
+---
 
+## 🔗 3. Create a Shortcut for `run_missdig.bat`
+1. In the same `setup` folder:
+   - Right-click on blank space → **New → Shortcut**
+   - In the location field, type:  
+     ```
+     cmd /c 
+     ```
+   - Right-click `run_missdig.bat` → **Copy as path**
+   - Paste the copied path after `cmd /c`
+2. Name the shortcut (e.g., `Run MissDig`)
+3. Right-click the shortcut → **Properties**
+4. Set the **Start in** field to the folder path (copy it from the address bar)
+5. *(Optional)* Click **Change Icon**, clear the path, hit Enter, and select an icon you like
+6. Click **Apply**
+7. Drag the shortcut to your **taskbar** to pin it
 
-Congrats, the script is all set up now!
+📷 _Example images:_  
+![Shortcut Create](Image/shortcut_create.png)  
+![Shortcut Properties](Image/shortcut_property.png)  
+![Shortcut Icon](Image/shortcut_icon.png)
+
+---
+
+## 📝 4. Customize Your Contact Info
+1. Open:  
+   `UR_Preview_3/github_code/code/setup/changeme_template.txt`
+2. Edit the `[USER]` section with your:
+   - Name
+   - Email
+   - Phone number
+
+📷 _Before and After:_  
+![Template](Image/changeme_template.png)  
+![Updated Info](Image/changeme_update.png)
+
+3. Save the file as:  
+   `changeme.txt`
+
+📷 _Example:_  
+![Correct Filename](Image/changeme_correct.png)
+
+---
+
+## 📦 5. Download and Extract Project Data
+1. Go to Teams OneDrive → `GIS Specialist` → `Document` → `General` → `Mike Stuff`
+2. Download `UR_data.zip`
+3. Extract its contents into the root of the `UR_Preview_3` folder
+
+📷 _Folder Structure:_  
+![Root Folder](Image/root_folder.png)
+
+---
+
+# 🌐 Initial Setup – Salesforce Scraper Extension
+
+## 1. Load the Chrome Extension
+1. Open **Google Chrome**
+2. Go to `chrome://extensions`
+3. Enable **Developer mode** (top-right corner)
+4. Click **Load Unpacked**
+5. Select the folder:  
+   `UR_Preview_3/github_code/GIS_Tools/ChromeExtension`
+6. The UR Extractor extension should now be loaded
+
+📷 _Chrome View:_  
+![Chrome Folder](Image/chrome-folder.png)
+
+## 2. Pin the Extension to Toolbar
+1. Click **Details** on the extension
+2. Enable **Pin to toolbar**
+
+📷 _Extension Settings:_  
+![Chrome Settings](Image/chrome-setting.png)
+
+---
+
+✅ You're now fully set up to run the Utility Review scripts and extract Salesforce tickets.
