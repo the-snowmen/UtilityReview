@@ -25,5 +25,8 @@ Thumbs.db
 # VS Code settings
 .vscode/
 
-#Ignore shortcut link
+# Ignore shortcut link
 *.lnk
+
+# Ignore Zip File
+*.zip
