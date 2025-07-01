@@ -27,3 +27,6 @@ Thumbs.db
 
 #Ignore shortcut link
 *.lnk
+
+# Ignore Zip File
+*.zip
