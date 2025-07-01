@@ -78,17 +78,17 @@ UR_Preview_3/
      ```
      
    - Right-click `run_missdig.bat` → **Copy as path**
-   - Paste the copied path after `cmd /c`
+   - Paste the copied path after `cmd /c`  
    📷 _Example:_  
    ![Shortcut Create](Image/shortcut_create.png) 
 2. Name the shortcut (e.g., `Run MissDig`)
 3. Right-click the shortcut → **Properties**
-4. Set the **Start in** field to the folder path (copy it from the address bar)
-   📷 _Example:_
-   ![Shortcut Properties](Image/shortcut_property.png) 
-5. *(Optional)* Click **Change Icon**, clear the path, hit Enter, and select an icon you like
-   📷 _Example:_
-   ![Shortcut Icon](Image/shortcut_icon.png)
+4. Set the **Start in** field to the folder path (copy it from the address bar)  
+📷 _Example:_  
+![Shortcut Properties](Image/shortcut_property.png) 
+5. *(Optional)* Click **Change Icon**, clear the path, hit Enter, and select an icon you like  
+📷 _Example:_  
+![Shortcut Icon](Image/shortcut_icon.png)
 6. Click **Apply**
 7. Drag the shortcut to your **taskbar** to pin it
 
@@ -128,13 +128,13 @@ UR_Preview_3/
 
 ## 1. Load the Chrome Extension
 1. Open **Google Chrome**
-2. Go to `chrome://extensions`
+2. Go to `chrome://extensions`  
 📷 _Extension Settings:_  
 ![Chrome Settings](Image/chrome-setting.png)
 3. Enable **Developer mode** (top-right corner)
 4. Click **Load Unpacked**
 5. Select the folder:  
-   `UR_Preview_3/github_code/GIS_Tools/ChromeExtension`
+   `UR_Preview_3/github_code/GIS_Tools/ChromeExtension`  
 📷 _Chrome View:_  
 ![Chrome Folder](Image/chrome-folder.png)
 6. The UR Extractor extension should now be loaded
