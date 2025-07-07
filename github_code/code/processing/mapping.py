@@ -59,8 +59,13 @@ def build_map(
 
     # --- Determine map bounds from work area ---
     minx, miny, maxx, maxy = work_gdf.total_bounds
-    sw = [miny, minx]
-    ne = [maxy, maxx]
+
+    # add 5% buffer in both directions
+    pad_x = (maxx - minx) * 0.03
+    pad_y = (maxy - miny) * 0.03
+
+    sw = [miny - pad_y, minx - pad_x]
+    ne = [maxy + pad_y, maxx + pad_x]
 
     # --- Initialize Folium map ---
     m = folium.Map(

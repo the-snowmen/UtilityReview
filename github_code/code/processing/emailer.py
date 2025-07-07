@@ -28,17 +28,17 @@ def compose_draft_gml(
 
     outlook = win32.Dispatch('Outlook.Application')
     mail = outlook.CreateItem(0)
-    mail.Subject = f"Diggers Hotline Ticket: {ticket_file.stem}"
+    mail.Subject = f"TICKET: {ticket_file.stem}"
     mail.To = mail_to
 
     # greeting + body
     greet = f"Hello {first_name},\n\n" if first_name else "Hello,\n\n"
     if any_feats:
-        body_txt = "Attached is a map of all features in your area (3% buffer). ALL LOCATIONS ARE APPROXIMATE.\n\n"
+        body_txt = "Attached is a map of all features in your area (4% buffer). ALL LOCATIONS ARE APPROXIMATE.\n\n"
     else:
         body_txt = "There are no Everstream facilities in the given work area.\n\n"
 
-    ticket_line = f"TICKET NO={ticket_file.stem}\n"
+    ticket_line = f"TICKET NO: {ticket_file.stem}\n"
     coord_line = f"Reference Coordinate: [{lon}, {lat}]\n\n" if lon is not None and lat is not None else "\n"
 
     body = greet + body_txt + ticket_line + coord_line
@@ -80,18 +80,19 @@ def compose_draft_txt(
 
     outlook = win32.Dispatch('Outlook.Application')
     mail = outlook.CreateItem(0)
-    subj_type = "IUPPS Ticket" if 'iupps' in ticket_file.name.lower() else "Diggers Hotline Ticket"
-    mail.Subject = f"{subj_type}: {ticket_file.stem}"
+    #subj_type = "IUPPS Ticket" if 'iupps' in ticket_file.name.lower() else "Diggers Hotline Ticket"
+    # mail.Subject = f"{subj_type}: {ticket_file.stem}"
+    mail.Subject = ticket_file.stem.replace('_', ' ').strip()
     mail.To = mail_to
 
     # greeting + body
     greet = f"Hello {first},\n\n" if first else "Hello,\n\n"
     if any_feats:
-        body_txt = "Attached is a map of all features in your area.\n\n"
+        body_txt = "Attached is a map of all features in your area (4% buffer). ALL LOCATIONS ARE APPROXIMATE.\n\n"
     else:
         body_txt = "There are no Everstream facilities in the given work area.\n\n"
 
-    ticket_line = f"TICKET NO={ticket_file.stem}\n"
+    ticket_line = f"Ticket NO: {ticket_file.stem.replace('_', ' ').strip()}\n"
     coord_line = f"Reference Coordinate: [{lon1}, {lat1}]\n\n"
 
     body = greet + body_txt + ticket_line + coord_line

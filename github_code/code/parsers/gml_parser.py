@@ -19,7 +19,7 @@ def read_and_reproject(gml_path: Path) -> gpd.GeoDataFrame:
     return gdf
 
 
-def buffer_gdf(gdf: gpd.GeoDataFrame, pct: float = 0.03) -> gpd.GeoDataFrame:
+def buffer_gdf(gdf: gpd.GeoDataFrame, pct: float = 0.04) -> gpd.GeoDataFrame:
     """
     Create a buffer around the union of all geometries in gdf.
 
