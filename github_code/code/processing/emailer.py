@@ -34,7 +34,7 @@ def compose_draft_gml(
     # greeting + body
     greet = f"Hello {first_name},\n\n" if first_name else "Hello,\n\n"
     if any_feats:
-        body_txt = "Attached is a map of all features in your area (4% buffer). ALL LOCATIONS ARE APPROXIMATE.\n\n"
+        body_txt = "Attached is a map of all features in your area (5% buffer). ALL LOCATIONS ARE APPROXIMATE.\n\n"
     else:
         body_txt = "There are no Everstream facilities in the given work area.\n\n"
 

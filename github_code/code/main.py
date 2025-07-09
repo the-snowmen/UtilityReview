@@ -2,6 +2,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+import math
 import geopandas as gpd
 from shapely.geometry import box
 
@@ -25,6 +26,37 @@ from processing.emailer import (
     compose_draft_txt,
     save_and_open_draft
 )
+
+# ─── Constants and Helpers ─────────────────────────────────────────────────
+MIN_SIZE_M = 30  # Minimum dimension in meters for txt workflow
+
+def enforce_min_size_deg(geom):
+    """
+    Ensures that the geometry bounding box has at least MIN_SIZE_M meters
+    in both dimensions by expanding it if necessary.
+    """
+    minx, miny, maxx, maxy = geom.bounds
+    center_lat = (miny + maxy) / 2.0
+
+    # degrees per meter approximations
+    deg_per_m_lat = 1.0 / 111_320
+    deg_per_m_lon = 1.0 / (111_320 * math.cos(math.radians(center_lat)))
+
+    width_deg = maxx - minx
+    height_deg = maxy - miny
+
+    req_w = MIN_SIZE_M * deg_per_m_lon
+    req_h = MIN_SIZE_M * deg_per_m_lat
+
+    expand_x = max(0, (req_w - width_deg) / 2.0)
+    expand_y = max(0, (req_h - height_deg) / 2.0)
+
+    return box(
+        minx - expand_x,
+        miny - expand_y,
+        maxx + expand_x,
+        maxy + expand_y,
+    )
 
 
 def main():
@@ -77,6 +109,11 @@ def main():
         miny, maxy = sorted([coord1[1], coord2[1]])
         poly = box(minx, miny, maxx, maxy)
         work_gdf = gpd.GeoDataFrame(geometry=[poly], crs="EPSG:4326")
+
+        # Enforce minimum size for TXT workflow
+        work_gdf = work_gdf.copy()
+        work_gdf.geometry = work_gdf.geometry.apply(enforce_min_size_deg)
+
         buf_gdf  = buffer_gdf(work_gdf)
 
     # 6) Clip all shapefiles
