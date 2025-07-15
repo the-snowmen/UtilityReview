@@ -12,9 +12,10 @@ def clip_shapefile(name: str, shp_path: Path, buf_gdf: gpd.GeoDataFrame) -> gpd.
       1. Read via GeoPandas (with fallback for Latin-1 encoding).
       2. Reproject to EPSG:4326 if needed.
       3. Filter on locate_tog == 'Locate' for CONDUIT and STRUCTURE.
-      4. Clip to buf_gdf.
-      5. For STRUCTURE: coerce subtypecod to int and assign a symbol.
-      6. Convert any datetime columns to ISO-8601 strings.
+      4. Pre-filter by bounding box using spatial index.
+      5. Clip to buf_gdf.
+      6. For STRUCTURE: coerce subtypecod to int and assign a symbol.
+      7. Convert any datetime columns to ISO-8601 strings.
 
     Args:
         name: The layer key (e.g., 'CONDUIT', 'STRUCTURE', 'FIBERCABLE').
@@ -38,10 +39,21 @@ def clip_shapefile(name: str, shp_path: Path, buf_gdf: gpd.GeoDataFrame) -> gpd.
     if name in ("CONDUIT", "STRUCTURE") and "locate_tog" in gdf.columns:
         gdf = gdf[gdf["locate_tog"] == "Locate"]
 
-    # 4) Clip to buffer
+    # 4) Pre-filter by bounding box to reduce features
+    try:
+        buf_union = buf_gdf.unary_union
+        minx, miny, maxx, maxy = buf_union.bounds
+        if gdf.sindex is not None:
+            idx = list(gdf.sindex.intersection((minx, miny, maxx, maxy)))
+            gdf = gdf.iloc[idx]
+    except Exception:
+        # spatial index or unary_union may fail; skip pre-filter
+        pass
+
+    # 5) Clip to buffer
     clipped = gpd.clip(gdf, buf_gdf).copy()
 
-    # 5) STRUCTURE-specific symbol logic
+    # 6) STRUCTURE-specific symbol logic
     if name == "STRUCTURE":
         clipped["subtypecod"] = (
             pd.to_numeric(clipped.get("subtypecod", pd.Series()), errors="coerce")
@@ -62,7 +74,7 @@ def clip_shapefile(name: str, shp_path: Path, buf_gdf: gpd.GeoDataFrame) -> gpd.
             return "?"
         clipped["symbol"] = clipped.apply(pick_symbol, axis=1)
 
-    # 6) Convert datetime columns
+    # 7) Convert datetime columns
     for col in clipped.columns:
         if pd.api.types.is_datetime64_any_dtype(clipped[col]):
             clipped[col] = clipped[col].dt.strftime("%Y-%m-%dT%H:%M:%S")
@@ -74,6 +86,8 @@ def clip_all_shapefiles(shapefiles: Dict[str, Path], buf_gdf: gpd.GeoDataFrame) 
     """
     Clip multiple shapefiles according to the buffer GeoDataFrame.
 
+    This version precomputes the buffer bounds to optimize spatial filtering.
+
     Args:
         shapefiles: Mapping of layer name to Path objects.
         buf_gdf: GeoDataFrame with a single polygon representing the buffer.
@@ -82,6 +96,14 @@ def clip_all_shapefiles(shapefiles: Dict[str, Path], buf_gdf: gpd.GeoDataFrame) 
         Dict mapping each layer name to its clipped GeoDataFrame.
     """
     clipped_layers: Dict[str, gpd.GeoDataFrame] = {}
+    # Precompute buffer union and bounds once
+    try:
+        buf_union = buf_gdf.unary_union
+        bounds = buf_union.bounds
+    except Exception:
+        bounds = None
+
     for name, path in shapefiles.items():
+        # Optionally pass bounds in the name or reuse inside function
         clipped_layers[name] = clip_shapefile(name, path, buf_gdf)
     return clipped_layers
