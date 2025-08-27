@@ -38,7 +38,7 @@ def compose_draft_gml(
     else:
         body_txt = "There are no Everstream facilities in the given work area.\n\n"
 
-    ticket_line = f"TICKET NO: {ticket_file.stem}\n"
+    ticket_line = f"TICKET NO: {ticket_file.stem}\n\n"
     coord_line = f"Reference Coordinate: [{lon}, {lat}]\n\n" if lon is not None and lat is not None else "\n"
 
     body = greet + body_txt + ticket_line + coord_line
@@ -95,7 +95,7 @@ def compose_draft_txt(
     ticket_line = f"Ticket NO: {ticket_file.stem.replace('_', ' ').strip()}\n"
     coord_line = f"Reference Coordinate: [{lon1}, {lat1}]\n\n"
 
-    body = greet + body_txt + ticket_line + coord_line
+    body = greet + body_txt + ticket_line + "\n" + coord_line
 
     # signature
     sig_lines = [
