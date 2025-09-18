@@ -92,7 +92,7 @@ def compose_draft_txt(
     else:
         body_txt = "There are no Everstream facilities in the given work area.\n\n"
 
-    ticket_line = f"Ticket NO: {ticket_file.stem.replace('_', ' ').strip()}\n"
+    ticket_line = f"Ticket #: {ticket_file.stem.replace('_', ' ').strip()}\n"
     coord_line = f"Reference Coordinate: [{lon1}, {lat1}]\n\n"
 
     body = greet + body_txt + ticket_line + "\n" + coord_line
