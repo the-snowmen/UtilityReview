@@ -1,4 +1,6 @@
+# map_builder.py
 import configparser
+import math
 from pathlib import Path
 from typing import Dict, Tuple
 
@@ -8,7 +10,7 @@ from folium import Element
 
 
 def build_map(
-    cfg: configparser.ConfigParser,
+    cfg: configparser.ConfigParser,  # works with ConfigParser or dict-like (same access pattern)
     work_gdf: gpd.GeoDataFrame,
     buf_gdf: gpd.GeoDataFrame,
     clipped: Dict[str, gpd.GeoDataFrame]
@@ -16,14 +18,9 @@ def build_map(
     """
     Build a Folium map showing clipped layers, work area outline, and legend.
 
-    Args:
-        cfg: Loaded ConfigParser from changeme.txt.
-        work_gdf: GeoDataFrame of the original work area.
-        buf_gdf: GeoDataFrame containing the buffered polygon.
-        clipped: Dict mapping layer names to their clipped GeoDataFrames.
-
-    Returns:
-        folium.Map instance ready to save.
+    Changes:
+      • Map view padding is now a fixed 15 meters in all directions (not 5% of extent).
+      • Email text updated separately in email_drafts.py.
     """
     # --- Extract styling from config ---
     color_cfg = cfg["COLORS"]
@@ -58,11 +55,15 @@ def build_map(
     legend_labels = {k: v for k, v in cfg["LEGEND"].items()}
 
     # --- Determine map bounds from work area ---
+    # Convert a fixed 15 meters into degrees at the mean latitude for a good approximation in EPSG:4326.
     minx, miny, maxx, maxy = work_gdf.total_bounds
+    mean_lat = (miny + maxy) / 2.0
+    m_per_deg_lat = 111_320.0
+    m_per_deg_lon = max(111_320.0 * math.cos(math.radians(mean_lat)), 1e-6)  # avoid div-by-zero near poles
 
-    # add 5% buffer in both directions
-    pad_x = (maxx - minx) * 0.05
-    pad_y = (maxy - miny) * 0.05
+    pad_m = 15.0  # fixed padding in meters
+    pad_x = pad_m / m_per_deg_lon
+    pad_y = pad_m / m_per_deg_lat
 
     sw = [miny - pad_y, minx - pad_x]
     ne = [maxy + pad_y, maxx + pad_x]

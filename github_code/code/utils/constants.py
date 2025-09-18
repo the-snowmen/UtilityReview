@@ -1,11 +1,11 @@
-# constants.py
+# utils/constants.py
 
 """
 Default constants and fallback values for the UR Preview application.
 """
 
 # Default config filename
-DEFAULT_CONFIG_NAME = "changeme.txt"
+DEFAULT_CONFIG_NAME = "config.json"
 
 # Folium tile service
 TILES_URL = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
@@ -19,34 +19,32 @@ DEFAULT_OPACITIES = {
 }
 
 DEFAULT_WEIGHTS = {
-    "CONDUIT":  3,
-    "FIBER":    4,
-    "WORK_AREA":2,
+    "CONDUIT":    3,
+    "FIBER":      4,
+    "WORK_AREA":  2,
 }
 
-# Default visibility toggles
 DEFAULT_VISIBILITY = {
-    "BUFFER_AREA": False,
+    "BUFFER_AREA": False
 }
 
-# Default structure symbol styling
 DEFAULT_STRUCTURE_SYMBOL = {
-    "SIZE":    12,
-    "COLOR":   "black",
+    "SIZE": 12,
+    "COLOR": "black",
     "OPACITY": 1.0,
+    "WEIGHT": 1
 }
 
-# Default legend labels (fallbacks if LEGEND section is missing keys)
 DEFAULT_LEGEND_LABELS = {
-    "CONDUIT":     "Conduit",
-    "AERIAL":      "Aerial Fiber",
-    "UNDERGROUND": "Underground Fiber",
-    "BRIDGE":      "Bridge Fiber",
-    "WORK_AREA":   "Work Area",
-    "SYMBOL_?":    "Unknown Structure",
-    "SYMBOL_M":    "Manhole",
-    "SYMBOL_H":    "Handhole",
-    "SYMBOL_V":    "Vault",
+    "CONDUIT":    "Conduit",
+    "AERIAL":     "Aerial Cable",
+    "UNDERGROUND":"Underground Cable",
+    "BRIDGE":     "Bridge-mounted Cable",
+    "WORK_AREA":  "Work Area",
+    "SYMBOL_?":   "Unknown Structure",
+    "SYMBOL_M":   "Manhole",
+    "SYMBOL_H":   "Handhole",
+    "SYMBOL_V":   "Vault",
 }
 
 __all__ = [

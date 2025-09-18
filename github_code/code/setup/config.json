@@ -1,0 +1,62 @@
+{
+  "USER": {
+    "name": "Mike Huang",
+    "email": "mhuang@everstream.net",
+    "cell": "414-340-9110",
+    "title": "GIS Utility Coordinator"
+  },
+  "PATHS": {
+    "downloadfolder": "~/Downloads",
+    "resultsdir": "..\\..\\Results",
+    "pythonexe": ".venv\\Scripts\\python.exe",
+    "scriptpath": "main.py"
+  },
+  "SHAPEFILES": {
+    "conduit": "..\\..\\UR_data\\ShapeFiles\\CONDUIT\\CONDUIT.shp",
+    "fibercable": "..\\..\\UR_data\\ShapeFiles\\FIBERCABLE\\FIBERCABLE.shp",
+    "structure": "..\\..\\UR_data\\ShapeFiles\\STRUCTURE\\STRUCTURE.shp"
+  },
+  "COLORS": {
+    "conduit": "#B22222",
+    "aerial": "#2acaea",
+    "underground": "#00ff00",
+    "bridge": "#964B00",
+    "unknown": "#00000000",
+    "work_area": "#FF6666"
+  },
+  "OPACITIES": {
+    "conduit": "0.2",
+    "fiber": "0.3",
+    "work_area": "0.3"
+  },
+  "BUFFER": {
+    "WorkArea": "15m"
+  },
+  "VISIBILITY": {
+    "buffer_area": "True"
+  },
+  "WEIGHTS": {
+    "conduit": "8",
+    "fiber": "4",
+    "work_area": "0"
+  },
+  "STRUCTURE_SYMBOL": {
+    "size": "12",
+    "color": "rgb(0, 0, 0)",
+    "opacity": "1.0"
+  },
+  "LEGEND": {
+    "conduit": "Conduit",
+    "aerial": "Aerial Cable",
+    "underground": "Underground Cable",
+    "bridge": "Bridge-mounted Cable",
+    "work_area": "Work Area",
+    "symbol_?": "Unknown/No Info",
+    "symbol_m": "Manhole",
+    "symbol_h": "Handhole",
+    "symbol_v": "Vault"
+  },
+  "QOL": {
+    "laziness": "True"
+  }
+}

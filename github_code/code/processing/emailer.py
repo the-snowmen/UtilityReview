@@ -1,3 +1,4 @@
+# email_drafts.py
 import os
 from pathlib import Path
 import win32com.client as win32
@@ -12,10 +13,10 @@ def compose_draft_gml(
     any_feats: bool
 ) -> 'win32.MailItem':
     """
-    Compose an Outlook draft for a GML-based ticket using plain-text COM
-    with original greeting/body formatting.
+    Compose an Outlook draft for a GML-based ticket using plain-text COM.
+    NOTE: Body text now references a 15 m buffer.
     """
-    # parse optional XML
+    # parse optional XML (pulls name/email if present)
     if xml_file and xml_file.exists():
         from parsers.txt_parser import parse_customer_details
         raw_name, to_addr, lon, lat = parse_customer_details(xml_file)
@@ -34,7 +35,7 @@ def compose_draft_gml(
     # greeting + body
     greet = f"Hello {first_name},\n\n" if first_name else "Hello,\n\n"
     if any_feats:
-        body_txt = "Attached is a map of all features in your area (5% buffer). ALL LOCATIONS ARE APPROXIMATE.\n\n"
+        body_txt = "Attached is a map of all features in your area (15 m buffer). ALL LOCATIONS ARE APPROXIMATE.\n\n"
     else:
         body_txt = "There are no Everstream facilities in the given work area.\n\n"
 
@@ -43,7 +44,7 @@ def compose_draft_gml(
 
     body = greet + body_txt + ticket_line + coord_line
 
-    # signature
+    # signature (email comes from config.json → USER.Email)
     sig_lines = [
         "Thank you,",
         "",
@@ -72,6 +73,7 @@ def compose_draft_txt(
 ) -> 'win32.MailItem':
     """
     Compose an Outlook draft for a TXT-based ticket using plain-text COM.
+    NOTE: Body text now references a 15 m buffer.
     """
     lon1, lat1 = coords[0]
     raw = info.get('Name') or info.get('Caller') or ''
@@ -80,15 +82,13 @@ def compose_draft_txt(
 
     outlook = win32.Dispatch('Outlook.Application')
     mail = outlook.CreateItem(0)
-    #subj_type = "IUPPS Ticket" if 'iupps' in ticket_file.name.lower() else "Diggers Hotline Ticket"
-    # mail.Subject = f"{subj_type}: {ticket_file.stem}"
     mail.Subject = ticket_file.stem.replace('_', ' ').strip()
     mail.To = mail_to
 
     # greeting + body
     greet = f"Hello {first},\n\n" if first else "Hello,\n\n"
     if any_feats:
-        body_txt = "Attached is a map of all features in your area (5% buffer). ALL LOCATIONS ARE APPROXIMATE.\n\n"
+        body_txt = "Attached is a map of all features in your area (50ft buffer). ALL LOCATIONS ARE APPROXIMATE.\n\n"
     else:
         body_txt = "There are no Everstream facilities in the given work area.\n\n"
 
@@ -97,7 +97,7 @@ def compose_draft_txt(
 
     body = greet + body_txt + ticket_line + "\n" + coord_line
 
-    # signature
+    # signature (email comes from config.json → USER.Email)
     sig_lines = [
         "Thank you,",
         "",
@@ -118,7 +118,7 @@ def compose_draft_txt(
 
 def save_and_open_draft(mail: 'win32.MailItem', out_dir: Path) -> Path:
     """
-    Save the MailItem as a .msg, open the containing folder, then open it in new Outlook.
+    Save the MailItem as a .msg, open the containing folder, then open it in Outlook.
     """
     filename = f"{mail.Subject.split(':')[-1].strip()}.msg"
     out_path = out_dir / filename

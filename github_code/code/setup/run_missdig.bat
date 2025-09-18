@@ -1,70 +1,56 @@
 @echo off
-setlocal enabledelayedexpansion
+setlocal EnableExtensions EnableDelayedExpansion
 
 REM ──────────────────────────────────────────────────────────────
 REM 0) Jump to the repo root (one level above this Setup folder)
 cd /d "%~dp0\.."
 
 REM ──────────────────────────────────────────────────────────────
-REM 1) Point at changeme.txt in Setup\
-set "CFG_PATH=%~dp0changeme.txt"
+REM 1) Point at config.json in Setup\  (txt -> json swap, minimal change)
+set "CFG_PATH=%~dp0config.json"
 if not exist "%CFG_PATH%" (
     echo ERROR: Configuration file not found: %CFG_PATH%
-    echo Please put changeme.txt in the Setup folder.
+    echo Please put config.json in the Setup folder.
     pause
     exit /b 1
 )
 echo Using config: %CFG_PATH%
 
 REM ──────────────────────────────────────────────────────────────
-REM 2) Read key=value pairs from that file
-for /f "usebackq tokens=1,* delims==" %%A in ("%CFG_PATH%") do (
-    set "rawKey=%%A"
-    set "firstChar=!rawKey:~0,1!"
-    if NOT "!firstChar!"=="[" if NOT "!firstChar!"=="#" (
-        set "key=!rawKey: =!"
-        set "rawVal=%%B"
-        for /f "tokens=* delims= " %%V in ("!rawVal!") do (
-            set "!key!=%%V"
-        )
-    )
+REM 2) Read needed values from JSON (replaces the old changeme.txt key=value loop)
+REM    We only extract the two things the launcher needs:
+REM      - PATHS.PythonExe  -> %PYTHON% and %PYTHONEXE% (both, to be safe)
+REM      - PATHS.ScriptPath -> %ScriptPath%
+REM    (PowerShell property names are case-insensitive.)
+for /f "usebackq delims=" %%A in (`
+  powershell -NoProfile -Command ^
+    "$cfg = Get-Content -Raw '%CFG_PATH%' | ConvertFrom-Json;" ^
+    "$py  = $cfg.PATHS.PythonExe; if(-not $py -or $py -eq ''){ $py = 'python' };" ^
+    "$sp  = $cfg.PATHS.ScriptPath; if(-not $sp -or $sp -eq ''){ $sp = 'main.py' };" ^
+    "[Console]::WriteLine('PYTHON=' + $py);" ^
+    "[Console]::WriteLine('PYTHONEXE=' + $py);" ^
+    "[Console]::WriteLine('ScriptPath=' + $sp);"
+`) do (
+  for /f "tokens=1,* delims==" %%K in ("%%A") do (
+    set "%%K=%%L"
+  )
 )
 
+REM strip any accidental quotes coming from JSON so paths with spaces still work
+set "PYTHON=%PYTHON:"=%"
+set "PYTHONEXE=%PYTHONEXE:"=%"
+set "ScriptPath=%ScriptPath:"=%"
+
 REM ──────────────────────────────────────────────────────────────
-REM 3) Choose python: prefer .venv, else use PythonExe
-if exist ".venv\Scripts\python.exe" (
-    set "PYTHON=.venv\Scripts\python.exe"
-) else if defined PythonExe (
-    if exist "%PythonExe%" (
-        set "PYTHON=%PythonExe%"
-    ) else (
-        echo ERROR: PythonExe is set to "%PythonExe%", but that file does not exist.
-        pause
-        exit /b 1
-    )
-) else (
-    echo ERROR: No .venv/python.exe and PythonExe not set!
-    pause
-    exit /b 1
+REM 3) Launch the configured script (unchanged behavior)
+echo Launching: "%PYTHON%" "%ScriptPath%"
+"%PYTHON%" "%ScriptPath%"
+set "EC=%ERRORLEVEL%"
+
+if not "%EC%"=="0" (
+  echo.
+  echo The script exited with errorlevel %EC%.
 )
 
-REM ──────────────────────────────────────────────────────────────
-REM 4) Ensure UTF-8 mode
-set PYTHONUTF8=1
-
-REM ──────────────────────────────────────────────────────────────
-REM 5a) Copy the config into the repo root so main.py will pick it up
-copy /Y "%CFG_PATH%" "%CD%\changeme.txt" >nul
-
-REM ──────────────────────────────────────────────────────────────
-REM 5b) Launch the configured script
-if defined ScriptPath (
-    echo Launching: %PYTHON% "%ScriptPath%"
-    "%PYTHON%" "%ScriptPath%"
-) else (
-    echo ERROR: ScriptPath not defined in changeme.txt!
-    pause
-    exit /b 1
-)
-
+echo.
 pause
